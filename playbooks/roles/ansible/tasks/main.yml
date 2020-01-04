@@ -13,8 +13,6 @@
     regexp: '^PasswordAuthentication no'
     line: 'PasswordAuthentication yes'
     backup: yes
-  notify:
-    - restart sshd
 
 - name: restart sshd
   service:
