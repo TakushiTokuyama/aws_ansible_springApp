@@ -2,10 +2,7 @@
   get_url: url=http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.24/bin/apache-tomcat-9.0.24.tar.gz dest=/opt/apache-tomcat-9.0.24.tar.gz
 
 - name: Tomcat解凍
-  unarchive:
-    src: /opt/apache-tomcat-9.0.24.tar.gz
-    dest: /opt/apache-tomcat-9.0.24
-    remote_src: yes
+  command: chdir=/opt/ /bin/tar xvf /opt/apache-tomcat-9.0.24.tar.gz -C /opt/ creates=/opt/apache-tomcat-9.0.24
 
 - name: Tomcatユーザの作成
   user:
