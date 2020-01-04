@@ -1,0 +1,4 @@
+- name: Mysql install ver8系
+  yum:
+    name: http://repo.mysql.com/mysql80-community-release-el7-1.noarch.rpm
+    state: present

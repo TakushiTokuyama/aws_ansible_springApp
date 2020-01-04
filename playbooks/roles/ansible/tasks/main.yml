@@ -1,0 +1,23 @@
+- name: Create user
+  user:
+     name: springAppUser
+     createhome: yes
+     state: present
+     password: "{{ '11111111' | password_hash('sha512') }}"
+
+- name: modify sshd_config
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    backrefs: yes
+    regexp: '^PasswordAuthentication no'
+    line: 'PasswordAuthentication yes'
+    backup: yes
+  notify:
+    - restart sshd
+
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
+    enabled: yes

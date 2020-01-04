@@ -1,0 +1,8 @@
+- name: javaの存在確認
+  shell: which java
+  register: java_which
+  failed_when: java_which.rc not in [0, 1]
+
+- name: Java 1.8　install
+  yum: name=java-1.8.0-openjdk-devel state=present
+  when: java_which.rc == 1

@@ -1,0 +1,2 @@
+- name: git clone
+  git: repo=https://github.com/TakushiTokuyama/spring_shareEventApp.git dest=/opt/springApp

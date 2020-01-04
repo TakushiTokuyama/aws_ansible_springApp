@@ -1,0 +1,9 @@
+- hosts: springApp
+  become: True
+  roles:
+    - ansible
+    - yum
+    - java
+    - mysql
+    - tomcat
+    - gitclone

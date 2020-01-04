@@ -1,0 +1,40 @@
+- name: Tomcatダウンロード
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-9/v9.0.24/bin/apache-tomcat-9.0.24.tar.gz dest=/opt/apache-tomcat-9.0.24.tar.gz
+
+- name: Tomcat解凍
+  unarchive:
+    src: /opt/apache-tomcat-9.0.24.tar.gz
+    dest: /opt/apache-tomcat-9.0.24
+    remote_src: yes
+
+- name: Tomcatユーザの作成
+  user:
+    name: tomcat
+  become: yes
+
+- name: Tomcatグループの作成
+  group:
+    name: tomcat
+  become: yes
+
+- name: Tomcatパーミッションとユーザーの変更
+  file: recurse=yes
+    group=tomcat
+    owner=tomcat
+    path=/opt/apache-tomcat-9.0.24
+    state=directory
+
+- name: Tomcat起動テンプレート記述
+  template:
+        src: roles/tomcat/templates/tomcat.service.j2
+        dest: /etc/systemd/system/tomcat.service
+        owner: tomcat
+        group: tomcat
+        mode: '755'
+        backup: yes
+
+- name: Tomcat起動テンプレートを反映させる
+  shell: systemctl daemon-reload
+
+- name: Tomcatサービスをリスタートする
+  service: name=tomcat enabled=yes state=restarted
